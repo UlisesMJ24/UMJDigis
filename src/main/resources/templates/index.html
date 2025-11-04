@@ -29,26 +29,26 @@
                     <i class="bi bi-funnel-fill me-2"></i>**Filtros de Búsqueda**
                 </div>
                 <div class="card-body">
-                    <form th:action="@{/Usuario/filter}" method="get" class="row g-3 align-items-end">
+                    <form  method="get" class="row g-3 align-items-end">
 
                         <div class="col-md-3 col-sm-6">
                             <label for="pNombreUsuario" class="form-label">Nombre</label>
-                            <input type="text" class="form-control" id="pNombreUsuario" name="pNombreUsuario" th:value="${pNombreUsuario}" placeholder="Buscar por nombre">
+                            <input type="text" class="form-control" id="pNombreUsuario" name="pNombreUsuario"  placeholder="Buscar por nombre">
                         </div>
 
                         <div class="col-md-3 col-sm-6">
                             <label for="pApellidoPaterno" class="form-label">Apellido Paterno</label>
-                            <input type="text" class="form-control" id="pApellidoPaterno" name="pApellidoPaterno" th:value="${pApellidoPaterno}" placeholder="Buscar por Ap. Paterno">
+                            <input type="text" class="form-control" id="pApellidoPaterno" name="pApellidoPaterno"  placeholder="Buscar por Ap. Paterno">
                         </div>
 
                         <div class="col-md-3 col-sm-6">
                             <label for="pApellidoMaterno" class="form-label">Apellido Materno</label>
-                            <input type="text" class="form-control" id="pApellidoMaterno" name="pApellidoMaterno" th:value="${pApellidoMaterno}" placeholder="Buscar por Ap. Materno">
+                            <input type="text" class="form-control" id="pApellidoMaterno" name="pApellidoMaterno"  placeholder="Buscar por Ap. Materno">
                         </div>
 
                         <div class="col-md-3 col-sm-6">
                             <label for="pNombreRol" class="form-label">Rol</label>
-                            <input class="form-control" list="datalistOptions" id="pNombreRol" name="pNombreRol" th:value="${pNombreRol}" placeholder="Buscar por Rol">
+                            <input class="form-control" list="datalistOptions" id="pNombreRol" name="pNombreRol"  placeholder="Buscar por Rol">
                             <datalist id="datalistOptions">
                                 <option value="Administrador"></option>
                                 <option value="Empleado"></option>
@@ -60,7 +60,7 @@
                             <button type="submit" class="btn btn-primary shadow">
                                 <i class="bi bi-search me-2"></i>Filtrar
                             </button>
-                            <a th:href="@{/Usuario/list}" class="btn btn-secondary ms-2">
+                            <a  class="btn btn-secondary ms-2">
                                 <i class="bi bi-arrow-clockwise"></i> Limpiar
                             </a>
                         </div>

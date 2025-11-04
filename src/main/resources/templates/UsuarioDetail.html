@@ -14,6 +14,7 @@
 
             <div class="row g-4" >
 
+                <!-- Informacion del Usuario -->
                 <div class="col-lg-4 col-12">
                     <div class="card shadow-sm h-100">
                         <div class="text-center my-4">
@@ -53,14 +54,16 @@
                             </ul>
 
                             <div class="d-grid">
-                                <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#modalModificarUsuario" th:data-bs-target="'#modalModificarUsuario' + ${usuario.UserName}">
+                                <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#modalModificarUsuario">
                                     <i class="bi bi-pencil-square me-2"></i>Modificar Datos
                                 </button>
                             </div>
                         </div>
                     </div>
                 </div>
-
+                <!-- Informacion del Usuario -->
+                
+                <!-- Direccion -->
                 <div class="col-lg-8 col-12">
                     <div class="card shadow-sm h-100">
                         <div class="card-header bg-primary text-white">
@@ -88,7 +91,7 @@
                                                 </small>
                                             </td>
                                             <td class="text-center text-nowrap">
-                                                <button class="btn btn-sm btn-outline-primary me-2"><i class="bi bi-pencil"></i></button>
+                                                <button class="btn btn-sm btn-outline-primary me-2" data-bs-toggle="modal" data-bs-target="#modalDireccion"><i class="bi bi-pencil"></i></button>
                                                 <button class="btn btn-sm btn-outline-danger"><i class="bi bi-trash"></i></button>
                                             </td>
                                         </tr>
@@ -96,26 +99,29 @@
                                 </table>
                             </div>
                             <div class="d-grid d-md-block mt-3">
-                                <a th:href="@{TampocoSirvo}" class="btn btn-success"><i class="bi bi-plus-circle-fill me-2"></i>Agregar Dirección</a>
+                                <button type="button" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#modalDireccion"><i class="bi bi-plus-circle-fill me-2"></i>Agregar Dirección</button>
                             </div>
                         </div>
                     </div>
                 </div>
-
-                <div class="modal fade" th:id="'modalModificarUsuario' + ${usuario.UserName}" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                    <div class="modal-dialog modal-lg"> <div class="modal-content">
+                <!-- Direccion -->
+                
+                <!-- Modal Editar Usuario -->
+                <div class="modal fade" id="modalModificarUsuario" tabindex="-1" aria-labelledby="modalModificarUsuarioLabel" aria-hidden="true">
+                    <div class="modal-dialog modal-lg"> 
+                        <div class="modal-content">
                             <div class="modal-header bg-primary text-white">
-                                <h5 class="modal-title" id="exampleModalLabel"><i class="bi bi-person-lines-fill me-2"></i>Modificar Detalles de Usuario</h5>
+                                <h5 class="modal-title" id="modalModificarUsuarioLabel"><i class="bi bi-person-lines-fill me-2"></i>Modificar Datos de Usuario</h5>
                                 <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
                             </div>
                             <div class="modal-body">
 
                                 <form action="" method="post" class="needs-validation" novalidate>
-
+                                    <input type="hidden" name="idUsuario" th:value="${usuario.IdUsuario}" />
                                     <div class="row mb-3 g-3">
                                         <div class="col-md-4">
                                             <label for="username" class="form-label">Username</label>
-                                            <input type="text" class="form-control" id="username" name="nombre" th:value="${usuario.UserName}" required placeholder="Example123">
+                                            <input type="text" class="form-control" id="username" name="userName" th:value="${usuario.UserName}" required placeholder="Example123">
                                         </div>
                                         <div class="col-md-4">
                                             <label for="nombre" class="form-label">Nombre</label>
@@ -141,7 +147,7 @@
                                     <div class="row mb-3 g-3">
                                         <div class="col-md-4">
                                             <label for="sexo" class="form-label">Sexo</label>
-                                            <select class="form-select" id="sexo" name="sexo" th:value="${usuario.Sexo}">
+                                            <select class="form-select" id="sexo" name="sexo">
                                                 <option value="" disabled selected>Seleccione...</option>
                                                 <option value="M" th:selected="${usuario.Sexo == 'M'}">Masculino</option>
                                                 <option value="F" th:selected="${usuario.Sexo == 'F'}">Femenino</option>
@@ -184,11 +190,99 @@
                         </div>
                     </div>
                 </div>
+                <!-- Modal Editar Usuario -->
+
+                <!-- Modal Direccion -->
+                <div class="modal fade" id="modalDireccion" tabindex="-1" aria-labelledby="modalDireccionLabel" aria-hidden="true">
+                    <div class="modal-dialog modal-lg"> 
+                        <div class="modal-content">
+                            <div class="modal-header bg-success text-white">
+                                <h5 class="modal-title" id="modalDireccionLabel"><i class="bi bi-geo-alt-fill me-2"></i>Gestión de Dirección</h5>
+                                <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+                            </div>
+                            <div class="modal-body">
+                                
+                                <form action="" method="post" class="needs-validation" novalidate>
+                                    
+                                    <input type="hidden" name="idUsuario" th:value="${usuario.IdUsuario}" />
+                                    <input type="hidden" name="idDireccion" id="idDireccionHidden" value="" />
+                                    
+                                    <h5 class="mb-3 text-secondary">Datos de la Dirección</h5>
+
+                                    <div class="row mb-4 g-4">
+                                        <div class="col-md-3">
+                                            <label for="calle" class="form-label">Calle</label>
+                                            <input type="text" class="form-control" id="calle" name="calle" placeholder="Nombre de la calle" required>
+                                        </div>
+
+                                        <div class="col-md-3">
+                                            <label for="numeroExterior" class="form-label">Número Exterior</label>
+                                            <input type="text" class="form-control" id="numeroExterior" name="numeroExterior" placeholder="Ej: 45" required>
+                                        </div>
+
+                                        <div class="col-md-3">
+                                            <label for="numeroInterior" class="form-label">Número Interior</label>
+                                            <input type="text" class="form-control" id="numeroInterior" name="numeroInterior" placeholder="Ej: B">
+                                        </div>
+
+                                        <div class="col-md-3">
+                                            <label for="CodigoPostal" class="form-label">Código Postal</label>
+                                            <select class="form-select" id="ddlCodigoPostal">
+                                                <option value="0" selected>Seleccione un Código Postal</option>
+                                            </select>
+                                        </div>
+                                    </div>
+
+                                    <div class="row mb-4 g-3">
+                                        <div class="col-md-3">
+                                            <label for="colonia" class="form-label">Colonia</label>
+                                            <select class="form-select" id="ddlColonia" name="IdColonia" required>
+                                                <option value="0" selected>Seleccione una Colonia</option>
+                                            </select>
+                                        </div>
+                                        <div class="col-md-3">
+                                            <label class="form-label">Municipio</label>
+                                            <select id="ddlMunicipio" class="form-select">
+                                                <option value="0" selected>Selecciona algún Municipio</option>
+                                            </select>
+                                        </div>
+                                        <div class="col-md-3">
+                                            <label class="form-label">Estado</label>
+                                            <select id="ddlEstado" class="form-select">
+                                                <option value="0" selected>Selecciona algún Estado</option>
+                                            </select>
+                                        </div>
+                                        <div class="col-md-3">
+                                            <label class="form-label">País</label>
+                                            <select id="ddlPais" class="form-select" >
+                                                <option value="0" selected>Selecciona algún País</option>
+                                                <option th:each="pais : ${Paises}" th:value="${pais.IdPais}" th:text="${pais.Nombre}"></option>
+                                            </select>
+                                        </div>
+                                    </div>
+
+                                    <div class="modal-footer px-0 pt-3 border-top">
+                                        <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">
+                                            <i class="bi bi-x-circle-fill me-1"></i>Cancelar
+                                        </button>
+                                        <button type="submit" class="btn btn-success">
+                                            <i class="bi bi-check-circle-fill me-1"></i>Guardar Dirección
+                                        </button>
+                                    </div>
+                                </form>
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- Modal Direccion -->
+                
             </div>
         </div>
 
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
-
+        
+       
     </body>
 </html>
