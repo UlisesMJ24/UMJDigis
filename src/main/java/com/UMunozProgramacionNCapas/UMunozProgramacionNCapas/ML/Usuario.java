@@ -20,8 +20,17 @@ public class Usuario {
     private String Celular;
     private String CURP;
     private String Imagen;
+    private Rol rol;
     public List<Direccion> Direcciones;
 
+    public Rol getRol() {
+        return rol;
+    }
+
+    public void setRol(Rol rol) {
+        this.rol = rol;
+    } 
+    
     public String getImagen() {
         return Imagen;
     }
@@ -133,9 +142,8 @@ public class Usuario {
     public void setDirecciones(List<Direccion> Direcciones) {
         this.Direcciones = Direcciones;
     }
+
+   
     
-    
-    
-    
-    
+   
 }
