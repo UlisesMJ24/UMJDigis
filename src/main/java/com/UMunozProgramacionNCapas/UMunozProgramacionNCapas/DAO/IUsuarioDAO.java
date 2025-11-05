@@ -12,4 +12,6 @@ public interface IUsuarioDAO {
     Result GetAll();
     
     Result GetById(int IdUsuario);
+    
+    Result SearchUsuarioDireccion(Usuario usuario);
 }

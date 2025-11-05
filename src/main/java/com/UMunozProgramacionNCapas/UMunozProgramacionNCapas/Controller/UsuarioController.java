@@ -104,8 +104,17 @@ public class UsuarioController {
 
         Result result = usuarioDAOImplementation.GetAll();
         model.addAttribute("Usuario", result.Objects);
-
+        model.addAttribute("usuarioBusqueda", new Usuario());
         return "index";
+    }
+    
+    @PostMapping("/GetAll")
+    public String SearchUsuarioDireccion(@ModelAttribute Usuario usuario, Model model){
+        
+        Result result = usuarioDAOImplementation.SearchUsuarioDireccion(usuario);
+        model.addAttribute("Usuario", result.Objects);
+        
+        return "redirect:/Usuario/GetAll";
     }
 
 
@@ -147,4 +156,10 @@ public class UsuarioController {
         return result;
 
     }
+    
+    @GetMapping("/CargaMasiva")
+    public String CargaMasiva() {
+        return "CargaMasiva";
+    }
+    
 }
