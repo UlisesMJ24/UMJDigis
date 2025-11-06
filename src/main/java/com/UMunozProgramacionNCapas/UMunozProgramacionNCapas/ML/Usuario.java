@@ -20,7 +20,7 @@ public class Usuario {
     private String Celular;
     private String CURP;
     private String Imagen;
-    private Rol rol;
+    public Rol rol;
     public List<Direccion> Direcciones;
 
     public Rol getRol() {

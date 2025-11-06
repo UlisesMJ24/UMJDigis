@@ -4,6 +4,16 @@ public class Rol {
 
 private int IdRol;
 private String Nombre;
+public Usuario usuario;
+
+    public Usuario getUsuario() {
+        return usuario;
+    }
+
+    public void setUsuario(Usuario usuario) {
+        this.usuario = usuario;
+    }
+
 
     public int getIdRol() {
         return IdRol;

@@ -12,35 +12,35 @@
               integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
         <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
     </head>
-    
+
     <!-- NAVBAR -->
-        <header>
-            <nav class="navbar navbar-expand-lg navbar-dark bg-primary shadow">
-                <div class="container-fluid">
-                    <a class="navbar-brand fw-bold" th:href="@{/Usuario/GetAll}">
-                        <i class="bi bi-gear-fill me-2"></i>Usuarios
-                    </a>
+    <header>
+        <nav class="navbar navbar-expand-lg navbar-dark bg-primary shadow">
+            <div class="container-fluid">
+                <a class="navbar-brand fw-bold" th:href="@{/Usuario/GetAll}">
+                    <i class="bi bi-gear-fill me-2"></i>Usuarios
+                </a>
 
-                    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#mainNavbar"
-                            aria-controls="mainNavbar" aria-expanded="false" aria-label="Toggle navigation">
-                        <span class="navbar-toggler-icon"></span>
-                    </button>
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#mainNavbar"
+                        aria-controls="mainNavbar" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
 
-                    <div class="collapse navbar-collapse" id="mainNavbar">
-                        <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-                            <li class="nav-item">
-                                <a class="nav-link" th:href="@{/Usuario/GetAll}">
-                                    <i class="bi bi-people-fill me-1"></i>Lista de usaurios
-                                </a>
-                            </li>
-<!--                            <li class="nav-item"><a class="nav-link" href="#">Ejemplo</a></li>
-                            <li class="nav-item"><a class="nav-link" href="#">Ejemplo</a></li>-->
-                        </ul>
+                <div class="collapse navbar-collapse" id="mainNavbar">
+                    <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                        <li class="nav-item">
+                            <a class="nav-link" th:href="@{/Usuario/GetAll}">
+                                <i class="bi bi-people-fill me-1"></i>Lista de usaurios
+                            </a>
+                        </li>
+                        <!--                            <li class="nav-item"><a class="nav-link" href="#">Ejemplo</a></li>
+                                                    <li class="nav-item"><a class="nav-link" href="#">Ejemplo</a></li>-->
+                    </ul>
 
-                    </div>
                 </div>
-            </nav>
-        </header>
+            </div>
+        </nav>
+    </header>
     <body>
 
         <!-- Body -->
@@ -130,6 +130,46 @@
 
 
 
+        </script>
+
+        <script>
+            let tipoArchivo = "";
+
+            const btnTxt = document.getElementById("btnTxt");
+            const btnXlsx = document.getElementById("btnXlsx");
+            const formularioArchivo = document.getElementById("formularioArchivo");
+            const archivo = document.getElementById("archivo");
+            const cargaMasiva = document.getElementById("cargaMasiva");
+
+            btnTxt.addEventListener("click", function () {
+                tipoArchivo = "txt";
+                formularioArchivo.style.display = "block";
+                archivo.setAttribute("accept", ".txt");
+                cargaMasiva.classList.remove("btn-primary");
+                cargaMasiva.classList.add("btn-success");
+                cargaMasiva.innerHTML = '<i class="bi bi-upload me-2"></i>Subir TXT';
+            });
+
+            btnXlsx.addEventListener("click", function () {
+                tipoArchivo = "xlsx";
+                formularioArchivo.style.display = "block";
+                archivo.setAttribute("accept", ".xlsx");
+                cargaMasiva.classList.remove("btn-success");
+                cargaMasiva.classList.add("btn-primary");
+                cargaMasiva.innerHTML = '<i class="bi bi-upload me-2"></i>Subir XLSX';
+            });
+
+            archivo.addEventListener("change", function () {
+                if (this.files.length > 0) {
+                    const fileName = this.files[0].name;
+                    const fileExtension = fileName.split('.').pop().toLowerCase();
+
+                    if (fileExtension !== tipoArchivo) {
+                        alert("Por favor, selecciona un archivo " + tipoArchivo.toUpperCase() + " válido.");
+                        this.value = "";
+                    }
+                }
+            });
         </script>
 
     </th:block>

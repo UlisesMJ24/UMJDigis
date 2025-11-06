@@ -45,27 +45,22 @@
 
                         <div class="col-md-3 col-sm-6">
                             <label for="pNombreUsuario" class="form-label">Nombre</label>
-                            <input type="text" class="form-control" id="pNombreUsuario" th:field="*{nombre}" placeholder="Buscar por nombre">
+                            <input type="text" class="form-control" id="pNombreUsuario" th:field="*{Nombre}" placeholder="Buscar por nombre">
                         </div>
 
                         <div class="col-md-3 col-sm-6">
                             <label for="pApellidoPaterno" class="form-label">Apellido Paterno</label>
-                            <input type="text" class="form-control" id="pApellidoPaterno" th:field="*{apellidoPaterno}" placeholder="Buscar por Ap. Paterno">
+                            <input type="text" class="form-control" id="pApellidoPaterno" th:field="*{ApellidoPaterno}" placeholder="Buscar por Ap. Paterno">
                         </div>
 
                         <div class="col-md-3 col-sm-6">
                             <label for="pApellidoMaterno" class="form-label">Apellido Materno</label>
-                            <input type="text" class="form-control" id="pApellidoMaterno" th:field="*{apellidoMaterno}" placeholder="Buscar por Ap. Materno">
+                            <input type="text" class="form-control" id="pApellidoMaterno" th:field="*{ApellidoMaterno}" placeholder="Buscar por Ap. Materno">
                         </div>
 
                         <div class="col-md-3 col-sm-6">
                             <label for="pNombreRol" class="form-label">Rol</label>
                             <input class="form-control" list="datalistOptions" id="pNombreRol" th:field="*{Rol.idRol}" placeholder="Buscar por Rol">
-                            <datalist id="datalistOptions">
-                                <option value="Administrador"></option>
-                                <option value="Empleado"></option>
-                                <option value="Cliente"></option>
-                            </datalist>
                         </div>
 
                         <div class="col-12 text-end">
@@ -89,7 +84,7 @@
                             </tr>
                         </thead>
                         <tbody>
-                            <tr th:each="usuario, usuarioStat : ${Usuario}">
+                            <tr th:each="usuario, usuarioStat : ${usuarios}">
 
                                 <td>
                                     <div class="text-center my-4">

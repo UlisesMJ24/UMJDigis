@@ -10,9 +10,13 @@ import com.UMunozProgramacionNCapas.UMunozProgramacionNCapas.ML.Direccion;
 import com.UMunozProgramacionNCapas.UMunozProgramacionNCapas.ML.Municipio;
 import com.UMunozProgramacionNCapas.UMunozProgramacionNCapas.ML.Result;
 import com.UMunozProgramacionNCapas.UMunozProgramacionNCapas.ML.Usuario;
+import java.io.BufferedReader;
+import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Base64;
+import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -67,22 +71,22 @@ public class UsuarioController {
     public String Add(@ModelAttribute Usuario usuario,
             @RequestParam("imagenFiel") MultipartFile imagenFile, Model model) {
 
-        if(imagenFile != null){
-            try{
+        if (imagenFile != null) {
+            try {
 
                 String extencion = imagenFile.getOriginalFilename().split("\\.")[1];
-                if(extencion.equals("jpg") || extencion.equals("png")){
+                if (extencion.equals("jpg") || extencion.equals("png")) {
 
                     byte[] byteImagen = imagenFile.getBytes();
                     String imagenBase64 = Base64.getEncoder().encodeToString(byteImagen);
                     usuario.setImagen(imagenBase64);
 
-                }else{
+                } else {
                     model.addAttribute("Error", "Formato de imagen no valida");
                     return "UsuarioForm";
                 }
 
-            }catch(Exception ex){
+            } catch (Exception ex) {
                 model.addAttribute("Error: Ocurrio un error con la imagen");
                 return "UsuarioForm";
             }
@@ -90,9 +94,9 @@ public class UsuarioController {
 
         Result result = usuarioDAOImplementation.Add(usuario);
 
-        if(result.Correct){
+        if (result.Correct) {
             return "redirect:/Usuario/GetAll";
-        }else{
+        } else {
             model.addAttribute("Error: Error al registrar al usuario" + result.ErrorMessage);
             return "UsuarioForm";
         }
@@ -101,22 +105,19 @@ public class UsuarioController {
 
     @GetMapping("/GetAll")
     public String GetAll(Model model) {
-
         Result result = usuarioDAOImplementation.GetAll();
-        model.addAttribute("Usuario", result.Objects);
+        model.addAttribute("usuarios", result.Objects);
         model.addAttribute("usuarioBusqueda", new Usuario());
         return "index";
     }
-    
-    @PostMapping("/GetAll")
-    public String SearchUsuarioDireccion(@ModelAttribute Usuario usuario, Model model){
-        
-        Result result = usuarioDAOImplementation.SearchUsuarioDireccion(usuario);
-        model.addAttribute("Usuario", result.Objects);
-        
-        return "redirect:/Usuario/GetAll";
-    }
 
+    @PostMapping("/GetAll")
+    public String SearchUsuarioDireccion(@ModelAttribute("usuarioBusqueda") Usuario usuario, Model model) {
+        Result result = usuarioDAOImplementation.SearchUsuarioDireccion(usuario);
+
+        model.addAttribute("usuarios", result.Objects);
+        return "index";
+    }
 
     @GetMapping("detail/{idUsuario}")
     public String Detail(@PathVariable("idUsuario") int IdUsuario, Model model) {
@@ -125,13 +126,12 @@ public class UsuarioController {
 
         model.addAttribute("usuario", result.Object);
 
-
         return "UsuarioDetail";
     }
 
     @GetMapping("GetEstados/{IdPais}")
     @ResponseBody
-    public Result GetEstadosByPais(@PathVariable int IdPais){
+    public Result GetEstadosByPais(@PathVariable int IdPais) {
 
         Result result = estadoDAOImplementation.GetEstadoByPais(IdPais);
 
@@ -140,7 +140,7 @@ public class UsuarioController {
 
     @GetMapping("GetMunicipio/{IdEstado}")
     @ResponseBody
-    public Result GetMunicipioByEstado(@PathVariable int IdEstado){
+    public Result GetMunicipioByEstado(@PathVariable int IdEstado) {
 
         Result result = municipioDAOImplementation.GetMunicipioByEstado(IdEstado);
 
@@ -149,17 +149,56 @@ public class UsuarioController {
 
     @GetMapping("GetColonia/{IdMunicipio}")
     @ResponseBody
-    public Result GetColoniaByMunicipio(@PathVariable int IdMunicipio){
+    public Result GetColoniaByMunicipio(@PathVariable int IdMunicipio) {
 
         Result result = coloniaDAOImplementation.GetColoniaByMunicipio(IdMunicipio);
 
         return result;
 
     }
-    
+
     @GetMapping("/CargaMasiva")
     public String CargaMasiva() {
         return "CargaMasiva";
     }
+
+    @PostMapping("/CargaMasiva")
+    public String CargaMasiva(@RequestParam("archivo") MultipartFile archivo) {
+        String Extencion = archivo.getOriginalFilename().split("\\.")[1];
+        if (Extencion.equals("txt")) {
+            LecturaArchivoTXT(archivo);
+        } else if (Extencion == "xlsx") {
+            LecturaArchivoXLSX(archivo);
+        } else {
+            System.out.println("Error");
+        }
+        return "CargaMasiva";
+
+    }
     
+    public List<Usuario> LecturaArchivoTXT(MultipartFile archivo){
+        
+        try(InputStream inputStream = archivo.getInputStream(); 
+                BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(inputStream));){
+            
+            
+            String linea="";
+            
+            while((linea = bufferedReader.readLine()) != null){
+                
+                String[] campos = linea.split("\\|");
+                System.out.println(campos[0]);
+            }
+            
+            return null;
+        }catch(Exception ex){
+            System.out.println(ex);
+        }
+        return null;
+    }
+
+    private void LecturaArchivoXLSX(MultipartFile archivo) {
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    }
+
 }
