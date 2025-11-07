@@ -212,11 +212,11 @@ public class UsuarioController {
         try {
 
             if (Extencion.equals("txt")) {
-                usuarios = LecturaArchivoTXT(archivo);
+                usuarios = LecturaArchivoTXT((MultipartFile) archivoGuardado);
                 errores = ValidarDatosArchivo(usuarios);
 
             } else if (Extencion.equals("xlsx")) {
-                usuarios = LecturaArchivoXLSX(archivo);
+                usuarios = LecturaArchivoXLSX((MultipartFile) archivoGuardado);
                 errores = ValidarDatosArchivo(usuarios);
 
             } else {
@@ -241,6 +241,7 @@ public class UsuarioController {
         return "CargaMasiva";
 
     }
+    
 
     public List<ErrorCarga> ValidarDatosArchivo(List<Usuario> usuarios) {
 
@@ -292,11 +293,11 @@ public class UsuarioController {
         return null;
     }
 
-    private List<Usuario> LecturaArchivoXLSX(MultipartFile archivo) {
+    private List<Usuario> LecturaArchivoXLSX(MultipartFile archivoGuardado) {
 
         List<Usuario> usuarios = new ArrayList<>();
 
-        try (XSSFWorkbook workBook = new XSSFWorkbook(archivo.getInputStream())) {
+        try (XSSFWorkbook workBook = new XSSFWorkbook(archivoGuardado.getInputStream())) {
             XSSFSheet workSheet = workBook.getSheetAt(0);
 
             for (Row row : workSheet) {
