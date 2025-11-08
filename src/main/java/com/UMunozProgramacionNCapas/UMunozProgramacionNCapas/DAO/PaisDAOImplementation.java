@@ -11,7 +11,7 @@ import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public class PaisDAOImplementation implements IPais{
+public class PaisDAOImplementation implements IPaisDAO{
 
     @Autowired
     private JdbcTemplate jdbcTemplate;

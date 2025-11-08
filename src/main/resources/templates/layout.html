@@ -133,42 +133,75 @@
         </script>
 
         <script>
-            let tipoArchivo = "";
+            document.addEventListener('DOMContentLoaded', function () {
+                let tipoArchivo = "";
 
-            const btnTxt = document.getElementById("btnTxt");
-            const btnXlsx = document.getElementById("btnXlsx");
-            const formularioArchivo = document.getElementById("formularioArchivo");
-            const archivo = document.getElementById("archivo");
-            const cargaMasiva = document.getElementById("cargaMasiva");
+                const btnTxt = document.getElementById("btnTxt");
+                const btnXlsx = document.getElementById("btnXlsx");
+                const formularioArchivo = document.getElementById("formularioArchivo");
+                const archivo = document.getElementById("archivo");
+                const cargaMasiva = document.getElementById("cargaMasiva");
 
-            btnTxt.addEventListener("click", function () {
-                tipoArchivo = "txt";
-                formularioArchivo.style.display = "block";
-                archivo.setAttribute("accept", ".txt");
-                cargaMasiva.classList.remove("btn-primary");
-                cargaMasiva.classList.add("btn-success");
-                cargaMasiva.innerHTML = '<i class="bi bi-upload me-2"></i>Subir TXT';
-            });
+                
+                function resetBotonesSeleccion(activo) {
+                     btnTxt.classList.remove("btn-secondary", "btn-dark");
+                    btnXlsx.classList.remove("btn-success");
 
-            btnXlsx.addEventListener("click", function () {
-                tipoArchivo = "xlsx";
-                formularioArchivo.style.display = "block";
-                archivo.setAttribute("accept", ".xlsx");
-                cargaMasiva.classList.remove("btn-success");
-                cargaMasiva.classList.add("btn-primary");
-                cargaMasiva.innerHTML = '<i class="bi bi-upload me-2"></i>Subir XLSX';
-            });
+                   btnTxt.classList.remove("btn-outline-dark");
+                    btnXlsx.classList.remove("btn-outline-success");
 
-            archivo.addEventListener("change", function () {
-                if (this.files.length > 0) {
-                    const fileName = this.files[0].name;
-                    const fileExtension = fileName.split('.').pop().toLowerCase();
 
-                    if (fileExtension !== tipoArchivo) {
-                        alert("Por favor, selecciona un archivo " + tipoArchivo.toUpperCase() + " válido.");
-                        this.value = "";
+                    if (activo === 'txt') {
+                       btnTxt.classList.add("btn-secondary");
+                        btnXlsx.classList.add("btn-outline-success");
+                    } else if (activo === 'xlsx') {
+                        btnXlsx.classList.add("btn-success");
+                        btnTxt.classList.add("btn-outline-dark");
                     }
                 }
+
+                btnTxt.addEventListener("click", function () {
+                    tipoArchivo = "txt";
+
+                    formularioArchivo.style.display = "block";
+                    archivo.setAttribute("accept", ".txt");
+
+                    resetBotonesSeleccion('txt');
+
+                    cargaMasiva.classList.remove("btn-success", "btn-primary");
+                    cargaMasiva.classList.add("btn-secondary"); // GRIS
+                    cargaMasiva.innerHTML = '<i class="bi bi-upload me-2"></i>Subir TXT';
+                });
+
+                btnXlsx.addEventListener("click", function () {
+                    tipoArchivo = "xlsx";
+
+                    formularioArchivo.style.display = "block";
+                    archivo.setAttribute("accept", ".xlsx,.xls");
+
+                    resetBotonesSeleccion('xlsx');
+
+                    cargaMasiva.classList.remove("btn-secondary", "btn-primary");
+                    cargaMasiva.classList.add("btn-success"); // VERDE
+                    cargaMasiva.innerHTML = '<i class="bi bi-upload me-2"></i>Subir XLSX';
+                });
+
+                archivo.addEventListener("change", function () {
+                    if (this.files.length > 0) {
+                        const fileName = this.files[0].name;
+                        const fileExtension = fileName.split('.').pop().toLowerCase();
+
+                        if (tipoArchivo === 'xlsx') {
+                            if (fileExtension !== 'xlsx' && fileExtension !== 'xls') {
+                                alert("Por favor, selecciona un archivo XLSX válido.");
+                                this.value = "";
+                            }
+                        } else if (fileExtension !== tipoArchivo) {
+                            alert("Por favor, selecciona un archivo " + tipoArchivo.toUpperCase() + " válido.");
+                            this.value = "";
+                        }
+                    }
+                });
             });
         </script>
 

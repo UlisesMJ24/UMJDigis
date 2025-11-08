@@ -1,7 +1,5 @@
 package com.UMunozProgramacionNCapas.UMunozProgramacionNCapas.ML;
 
-import groovyjarjarantlr4.v4.runtime.misc.NotNull;
-import jakarta.validation.Valid;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Pattern;
@@ -36,14 +34,14 @@ public class Usuario {
     @DateTimeFormat(pattern = "yyyy-MM-dd")
     private Date FechaNacimiento;
 
-//    @NotBlank(message = "EL Sexo es obligatorio.")
+//  @NotBlank(message = "EL Sexo es obligatorio.")
     private char Sexo;
 
     @NotBlank(message = "El telefono es obligatorio.")
-    @Pattern(regexp = "\\d{10}", message = "El telefono debe ser un numero de 10 digitos.")
+//    @Pattern(regexp = "\\d{10}", message = "El telefono debe ser un numero de 10 digitos.")
     private String Telefono;
 
-    @Pattern(regexp = "\\d{10}", message = "El celular debe ser un numero de 10 digitos.")
+//    @Pattern(regexp = "\\d{10}", message = "El celular debe ser un numero de 10 digitos.")
     private String Celular;
 
     @NotBlank(message = "El CURP es Obligatorio.")
@@ -55,7 +53,7 @@ public class Usuario {
 //    @NotBlank(message = "El Rol es obligatorio.")
     public Rol rol;
 
-//     @Valid
+//    @Valid
 //    @NotBlank(message = "Debe haver al menos una direccion.")
     public List<Direccion> Direcciones;
 

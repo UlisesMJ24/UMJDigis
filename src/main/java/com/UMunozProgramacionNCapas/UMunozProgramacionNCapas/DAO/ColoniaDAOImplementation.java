@@ -12,7 +12,7 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public class ColoniaDAOImplementation
-        implements IColonia {
+        implements IColoniaDAO {
 
     @Autowired
     private JdbcTemplate jdbcTemplate;

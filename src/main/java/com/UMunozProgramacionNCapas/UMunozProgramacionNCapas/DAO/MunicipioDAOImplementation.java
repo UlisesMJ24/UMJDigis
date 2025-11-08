@@ -10,7 +10,7 @@ import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public class MunicipioDAOImplementation implements IMunicipio {
+public class MunicipioDAOImplementation implements IMunicipioDAO {
 
     @Autowired
     private JdbcTemplate jdbcTemplate;

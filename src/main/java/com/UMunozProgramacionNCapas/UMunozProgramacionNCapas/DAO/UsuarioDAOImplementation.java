@@ -8,14 +8,18 @@ import com.UMunozProgramacionNCapas.UMunozProgramacionNCapas.ML.Pais;
 import com.UMunozProgramacionNCapas.UMunozProgramacionNCapas.ML.Result;
 import com.UMunozProgramacionNCapas.UMunozProgramacionNCapas.ML.Rol;
 import com.UMunozProgramacionNCapas.UMunozProgramacionNCapas.ML.Usuario;
+import java.sql.CallableStatement;
 import java.sql.ResultSet;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.CallableStatementCallback;
 import org.springframework.jdbc.core.JdbcTemplate;
+import org.springframework.jdbc.core.PreparedStatementCallback;
 import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Transactional;
 
 @Repository
 public class UsuarioDAOImplementation implements IUsuarioDAO {
@@ -23,6 +27,41 @@ public class UsuarioDAOImplementation implements IUsuarioDAO {
     @Autowired
     public JdbcTemplate jdbcTemplate;
 
+    
+    
+    @Transactional
+    public Result CargaMasiva(List<Usuario> usuarios) {
+        Result result = new Result();
+
+        String sql = "INSERT INTO Usuario (UserName, Nombre, ApellidoPaterno, ApellidoMaterno, "
+                + "Email, Password, FechaNacimiento, Sexo, Telefono, Celular, CURP, Imagen) "
+                + "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+
+        jdbcTemplate.batchUpdate(sql, usuarios, usuarios.size(),
+                (ps, u) -> {
+                    ps.setString(1, u.getUserName());
+                    ps.setString(2, u.getNombre());
+                    ps.setString(3, u.getApellidoPaterno());
+                    ps.setString(4, u.getApellidoMaterno());
+                    ps.setString(5, u.getEmail());
+                    ps.setString(6, u.getPassword());
+                    ps.setDate(7, new java.sql.Date(u.getFechaNacimiento().getTime()));
+                    ps.setString(8, String.valueOf(u.getSexo()));
+                    ps.setString(9, u.getTelefono());
+                    ps.setString(10, u.getCelular());
+                    ps.setString(11, u.getCURP());
+                    ps.setString(12, u.getImagen());
+                }
+        );
+
+        result.Correct = true;
+        return result;
+    }
+
+
+    
+    
+    
     @Override
     public Result Add(Usuario usuario) {
 
